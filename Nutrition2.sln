@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nutrition2", "Nutrition2\Nutrition2.csproj", "{2A14828A-1995-43D5-A638-3ADE33858959}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A14828A-1995-43D5-A638-3ADE33858959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A14828A-1995-43D5-A638-3ADE33858959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A14828A-1995-43D5-A638-3ADE33858959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A14828A-1995-43D5-A638-3ADE33858959}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74322C1E-BF56-4347-81C5-4D7208B5512C}
+	EndGlobalSection
+EndGlobal
