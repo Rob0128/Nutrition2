@@ -31,9 +31,9 @@ export default function SetLimits({limits, handleSetLimits, clearLimits, carbLim
           aria-describedby=""
           ref={limitNameRef} type="number"
         />
-        <Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
+        {/*<Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
           Set
-        </Button>
+        </Button>*/}
       </InputGroup>
       </td>
             <td>{carbLimit.value}</td>
@@ -48,7 +48,13 @@ export default function SetLimits({limits, handleSetLimits, clearLimits, carbLim
             <td colSpan={2}>Larry the Bird</td>
           </tr>
         </tbody>
-      </Table>
+            </Table>
+            {/* Will need to set all values not just carbs */}   
+            <div className="setButton">
+               <Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
+                Set
+                </Button>
+                </div>
       </div>
     );
 }

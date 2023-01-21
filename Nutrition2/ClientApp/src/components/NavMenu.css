@@ -1,11 +1,18 @@
 ﻿a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-family: caveat-bold;
+    font-size: 30px;
+    color: #5a755d !important;
+}
+
+.nav-link {
+    font-family: nunito-bold;
 }
 
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 @media (min-width: 768px) {
   html {

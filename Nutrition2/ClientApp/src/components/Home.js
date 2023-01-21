@@ -59,7 +59,12 @@ export function Home({ Component, pageProps }) {
     const [index, setIndex] = useState(storedIndex);
     var addingIndex = 0;
 
-   
+    var [isOpen, setIsOpen] = useState(false);
+
+
+    const openCart = () => setIsOpen(true);
+    const closeCart = () => setIsOpen(false);
+
     useEffect(() => {
         console.log("hi")
 
@@ -232,8 +237,7 @@ export function Home({ Component, pageProps }) {
                {/* <div>
                     {prods.map(prod => <h2>{prod.title}</h2>)}
                 </div>*/}
-            <Row className='topBar'></Row>
-                <Row>
+               {/* <Row>
                     <Col sm={1}>
                     </Col>
                     <Col sm={5}>
@@ -250,14 +254,14 @@ export function Home({ Component, pageProps }) {
                     </Col>
                     <Col sm={1}>
                     </Col>
-                </Row>
+                </Row>*/}
                 <Row className='breakBar'>
                 </Row>
                 
-                <Row className='breakBar'>
+                <Row>
                 </Row>
                 <Row>
-                <Col sm={7}>
+                <Col sm={8}>
                     <div className='searchBox'>
                     <h2 className='searchText'>Search products</h2>
                         <SearchProducts className='searchBar' search={search} />
@@ -265,13 +269,29 @@ export function Home({ Component, pageProps }) {
                         <ShowProducts prods={prods} handleAdd={handleAdd} handleAddIndex={handleAddIndex} />
                         
                     </Col>
-                    <Col sm={1}>
-                    </Col>
-                    <Col smsm={4} className='shoppingListBox'>
-                        <h2>Your Shopping List</h2>
-                        <div><button type="button" className="btn btn-primary" onClick={() => handleCheckout()}>Checkout</button></div>
-                        <ShowShoppingList  shoppingList={shoppingList} handleRemove={handleRemove} handleAddIndex={handleAddIndex} />
-                    </Col>
+                    
+                    
+                <Col sm={3} >
+                    <div className='shoppingButtonBox'>
+                    <button onClick={() => openCart()} className="rounded shoppingButton" varient="outline-primary" style={{ width: "5rem", height: "3rem", position:"relative" }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="" width="" height="" viewBox="0 0 32 32" version="1.1">
+                    <title>shopping-basket</title>
+                    <path d="M30 13.25h-5.572l-5.723-10.606c-0.129-0.236-0.376-0.394-0.66-0.394-0.414 0-0.75 0.336-0.75 0.75 0 0.131 0.033 0.253 0.092 0.36l-0.002-0.004 5.338 9.894h-13.415l5.395-9.891c0.055-0.101 0.087-0.222 0.087-0.35 0-0.414-0.336-0.75-0.75-0.75-0.279 0-0.522 0.152-0.651 0.377l-0.002 0.004-5.787 10.609h-5.6c-0.414 0-0.75 0.336-0.75 0.75s0.336 0.75 0.75 0.75v0h1.389l1.913 14.35c0.050 0.369 0.364 0.65 0.742 0.65 0 0 0 0 0.001 0h20c0.379-0 0.693-0.281 0.744-0.646l0-0.004 1.913-14.35h1.298c0.414 0 0.75-0.336 0.75-0.75s-0.336-0.75-0.75-0.75v0zM25.389 28.25h-18.688l-1.8-13.5h22.287zM16.044 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.035 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.035-7c0-0.001 0-0.002 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0zM11.065 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.034 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.034-7c0-0.001 0-0.002 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0zM21.016 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.033 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.033-7c0-0.001 0-0.003 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0z" />
+                    </svg>
+                    <div className="rounded-circle bg-danger d-flex justify-content-center align-items-center" style={{ color: "white", width: "1.5rem", height: "1.5rem", position: "absolute", bottom: "0", right: "0", transform: "translate(+25%, +25%)" } }>3</div>
+                    </button>
+                
+                    <button className="rounded shoppingButton" varient="outline-primary" style={{ width: "5rem", height: "3rem", position: "relative" }} onClick={() => handleCheckout()}>Checkout</button>
+                    </div>
+                    <SetLimits limits={limits} carbLimit={carbLimit} handleSetLimits={handleSetLimits} handleSetCarbLimit={handleSetCarbLimit} clearLimits={clearLimits} />
+                    <GetLimits limits={limits} />
+
+                    <Totals limits={limits} totals={totals} carbLimit={carbLimit} carbCalc={carbCalc} handleSetLimits={handleSetLimits} handleSetCarbLimit={handleSetCarbLimit} clearLimits={clearLimits} />
+
+
+                    <ShowShoppingList closeCart={closeCart} shoppingList={shoppingList} handleRemove={handleRemove} handleAddIndex={handleAddIndex} cartClose={closeCart} isOpen={isOpen} />
+                </Col>
+                
                 </Row>
                 <Row>
                     <Col md>
