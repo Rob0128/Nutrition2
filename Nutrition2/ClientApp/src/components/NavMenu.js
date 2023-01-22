@@ -3,6 +3,7 @@ import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from '
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 import './NavMenu.css';
+import { StyledNavbarContainer } from '@nextui-org/react';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -26,7 +27,7 @@ export class NavMenu extends Component {
     return (
       <header>
             <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white mb-3 shadow-sm " container light>
-          <NavbarBrand tag={Link} to="/">Nutri</NavbarBrand>
+                <NavbarBrand tag={Link} to="/"><div className="logo"></div><div className="brand">Nutri</div></NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
             <ul className="navbar-nav flex-grow">

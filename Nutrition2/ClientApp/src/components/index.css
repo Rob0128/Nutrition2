@@ -20,6 +20,20 @@ body {
     -moz-osx-font-smoothing: grayscale;
     font-family: nunito-regular;
     color: #757574;
+    background-image: url("LeafBackground.jpg");
+    background-size: 100% auto;
+}
+
+.logo {
+    background-image: url("logo.png");
+    background-size: 100% auto;
+    height: 50px;
+    width: 50px;
+    float: left;
+}
+
+.brand {
+    float: right
 }
 
 .table {
@@ -33,9 +47,10 @@ code {
 }
 
 .shoppingButton {
-    margin-left:1rem;
-    margin-right:1rem;
-    margin-bottom:2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    background-color: white;
 }
 
 .setButton {
@@ -46,17 +61,26 @@ code {
     text-align: center;
 }
 
+.rightDiv {
+    text-align: center;
+}
+
+.rightBoxes {
+    background-color: white;
+}
+
+.shadowDiv {
+    margin-top:30px;
+    height: 1rem;
+    width: 16rem;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 50%;
+}
+
 .breakBar {
     height: 50px;
-}
-
-.topBarText{
-
-}
-
-.topBar {
-    background-image: url("C:/Users/Robert Hill/Pictures/dark-groceries.jpg");
-    height: 300px;
 }
 
 .searchBox {

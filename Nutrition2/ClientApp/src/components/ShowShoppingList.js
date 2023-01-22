@@ -11,6 +11,7 @@ export default function ShowShoppingList({ shoppingList, handleRemove, isOpen, c
                 </Offcanvas.Header>
             <Table>
                 <tbody>
+
                     {shoppingList.map(listItem => { return <ShoppingListProduct key={listItem.newIndex} listItem={listItem} handleRemove={handleRemove} /> })}
                 </tbody>
             </Table>

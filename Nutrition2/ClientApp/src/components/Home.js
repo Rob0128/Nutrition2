@@ -257,7 +257,10 @@ export function Home({ Component, pageProps }) {
                 </Row>*/}
                 <Row className='breakBar'>
                 </Row>
-                
+
+                <Row className=''>
+                </Row>
+
                 <Row>
                 </Row>
                 <Row>
@@ -271,7 +274,7 @@ export function Home({ Component, pageProps }) {
                     </Col>
                     
                     
-                <Col sm={3} >
+                <Col sm={3} className="rightDiv">
                     <div className='shoppingButtonBox'>
                     <button onClick={() => openCart()} className="rounded shoppingButton" varient="outline-primary" style={{ width: "5rem", height: "3rem", position:"relative" }}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="" width="" height="" viewBox="0 0 32 32" version="1.1">
@@ -283,13 +286,17 @@ export function Home({ Component, pageProps }) {
                 
                     <button className="rounded shoppingButton" varient="outline-primary" style={{ width: "5rem", height: "3rem", position: "relative" }} onClick={() => handleCheckout()}>Checkout</button>
                     </div>
+                    <div className="rightBoxes">
                     <SetLimits limits={limits} carbLimit={carbLimit} handleSetLimits={handleSetLimits} handleSetCarbLimit={handleSetCarbLimit} clearLimits={clearLimits} />
                     <GetLimits limits={limits} />
-
+                    </div>
+                    <div className="rightBoxes">
                     <Totals limits={limits} totals={totals} carbLimit={carbLimit} carbCalc={carbCalc} handleSetLimits={handleSetLimits} handleSetCarbLimit={handleSetCarbLimit} clearLimits={clearLimits} />
+                    </div>
+                    {/*<div className="shadowDiv">
+                    </div>*/}
 
-
-                    <ShowShoppingList closeCart={closeCart} shoppingList={shoppingList} handleRemove={handleRemove} handleAddIndex={handleAddIndex} cartClose={closeCart} isOpen={isOpen} />
+                    <ShowShoppingList closeCart={closeCart} limits={limits} shoppingList={shoppingList} handleRemove={handleRemove} handleAddIndex={handleAddIndex} cartClose={closeCart} isOpen={isOpen} />
                 </Col>
                 
                 </Row>
