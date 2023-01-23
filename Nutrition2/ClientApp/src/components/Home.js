@@ -21,6 +21,7 @@ const LOCAL_STORAGE_KEY = 'nutritionfe.limits'
 const LOCAL_CARB_LIMIT_KEY = 'nutritionfe.carblimit'
 const LOCAL_CARB_CALC_KEY = 'nutritionfe.carblimit'
 const LOCAL_FAT_TOT_LIMIT_KEY = 'nutritionfe.fattotlimit'
+const LOCAL_FAT_CALC_KEY = 'nutritionfe.fattotlimit'
 const LOCAL_PRODS_KEY = 'nutritionfe.prods'
 const LOCAL_LIMIT = 'nutritionfe.limit'
 const LOCAL_INDEX = 'nutritionfe.index'
@@ -43,6 +44,8 @@ export function Home({ Component, pageProps }) {
 
     const storedFatTotLimit = JSON.parse(localStorage.getItem(LOCAL_FAT_TOT_LIMIT_KEY)) || [];
     const [fatLimit, setFatLimits] = useState(storedFatTotLimit);
+    const storedFatCalc = JSON.parse(localStorage.getItem(LOCAL_CARB_CALC_KEY)) || [];
+    const [fatCalc, setFatCalc] = useState(storedFatCalc);
 
     const storedLimits = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
     const [limits, setLimits] = useState(storedLimits);
@@ -97,11 +100,18 @@ export function Home({ Component, pageProps }) {
         
     }, [totals, shoppingList, carbLimit])
 
-    const handleSetLimits = (e) => {
-        const value = e
-        if (value === '') return
-        setLimits(prevLimits => { return [...prevLimits, { id: uuidv4(), name: "carbs", value: value }] })
-    }
+    useEffect(() => {
+        if (fatLimit.value > 0) {
+            var newAmount = fatLimit.value - totals;
+            setCarbCalc(newAmount);
+        }
+        else {
+            setFatCalc(0);
+        }
+
+    }, [totals, shoppingList, fatLimit])
+
+   
 
     const search = (e) => {
         
@@ -133,13 +143,27 @@ export function Home({ Component, pageProps }) {
 
     };
 
-    const handleSetCarbLimit = (element, val) => {
+    const handleSetLimits = (element, val) => {
         const value = val
         if (value === '') return
 
         switch (element) {
             case "carb":
                 setCarbLimits(prevLimits => { return { value: value } })
+                break;
+            case "fat":
+                setFatLimits(prevLimits => { return { value: value } })
+                break;
+        }
+    }
+
+    const handleSetFatLimit = (element, val) => {
+        const value = val
+        if (value === '') return
+
+        switch (element) {
+            case "fat":
+                setFatLimits(prevLimits => { return { value: value } })
                 break;
         }
     }
@@ -234,65 +258,62 @@ export function Home({ Component, pageProps }) {
         
             
         <Container fluid>
-               {/* <div>
-                    {prods.map(prod => <h2>{prod.title}</h2>)}
-                </div>*/}
-               {/* <Row>
-                    <Col sm={1}>
-                    </Col>
-                    <Col sm={5}>
-
-
-                        <SetLimits limits={limits} carbLimit={carbLimit} handleSetLimits={handleSetLimits} handleSetCarbLimit={handleSetCarbLimit} clearLimits={clearLimits} />
-                        <GetLimits limits={limits} />
-                    </Col>
-                    <Col sm={2}>
-                    </Col>
-                    <Col sm={3}>
-                        <Totals limits={limits} totals={totals} carbLimit={carbLimit} carbCalc={carbCalc} handleSetLimits={handleSetLimits} handleSetCarbLimit={handleSetCarbLimit} clearLimits={clearLimits} />
-
-                    </Col>
-                    <Col sm={1}>
-                    </Col>
-                </Row>*/}
+               
                 <Row className='breakBar'>
                 </Row>
 
-                <Row className=''>
+            <Row className=''>
+                <Col sm={8}>
+                    <SetLimits limits={limits} carbLimit={carbLimit} fatLimit={fatLimit} handleSetLimits={handleSetLimits} handleSetFatLimit={handleSetFatLimit}  clearLimits={clearLimits} />
+                <GetLimits limits={limits} />
+                </Col>
+                <Col sm={3}>
+                    <Totals limits={limits} totals={totals} carbLimit={carbLimit} carbCalc={carbCalc} handleSetLimits={handleSetLimits} clearLimits={clearLimits} />
+
+                        
+                    </Col>
                 </Row>
 
-                <Row>
+            <Row>
+                <Row className='breakBar'>
                 </Row>
-                <Row>
-                <Col sm={8}>
+                </Row>
+            <Row>
+                <Col sm={1}>
+                    </Col>
+                <Col sm={10}>
                     <div className='searchBox'>
-                    <h2 className='searchText'>Search products</h2>
+                        <h2 className='searchText'>Search products</h2>
+                        <div className="searchBarDiv">
                         <SearchProducts className='searchBar' search={search} />
+                            </div>
+                        <div className='shoppingButtonBox'>
+
+                        <button className="rounded shoppingButton" varient="outline-primary" onClick={() => handleCheckout()}>Checkout</button>
+                        </div>
+
+                        <button onClick={() => openCart()} className="rounded shoppingButton" varient="outline-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="" width="" height="" viewBox="0 0 32 32" version="1.1">
+                                <title>shopping-basket</title>
+                                <path d="M30 13.25h-5.572l-5.723-10.606c-0.129-0.236-0.376-0.394-0.66-0.394-0.414 0-0.75 0.336-0.75 0.75 0 0.131 0.033 0.253 0.092 0.36l-0.002-0.004 5.338 9.894h-13.415l5.395-9.891c0.055-0.101 0.087-0.222 0.087-0.35 0-0.414-0.336-0.75-0.75-0.75-0.279 0-0.522 0.152-0.651 0.377l-0.002 0.004-5.787 10.609h-5.6c-0.414 0-0.75 0.336-0.75 0.75s0.336 0.75 0.75 0.75v0h1.389l1.913 14.35c0.050 0.369 0.364 0.65 0.742 0.65 0 0 0 0 0.001 0h20c0.379-0 0.693-0.281 0.744-0.646l0-0.004 1.913-14.35h1.298c0.414 0 0.75-0.336 0.75-0.75s-0.336-0.75-0.75-0.75v0zM25.389 28.25h-18.688l-1.8-13.5h22.287zM16.044 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.035 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.035-7c0-0.001 0-0.002 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0zM11.065 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.034 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.034-7c0-0.001 0-0.002 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0zM21.016 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.033 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.033-7c0-0.001 0-0.003 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0z" />
+                            </svg>
+                            <div className="rounded-circle bg-danger d-flex justify-content-center align-items-center" style={{ color: "white", width: "1.5rem", height: "1.5rem", position: "absolute", bottom: "0", right: "0", transform: "translate(+25%, +25%)" }}>3</div>
+                        </button>
+
                     </div>
+
                         <ShowProducts prods={prods} handleAdd={handleAdd} handleAddIndex={handleAddIndex} />
                         
                     </Col>
                     
                     
                 <Col sm={3} className="rightDiv">
-                    <div className='shoppingButtonBox'>
-                    <button onClick={() => openCart()} className="rounded shoppingButton" varient="outline-primary" style={{ width: "5rem", height: "3rem", position:"relative" }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="" width="" height="" viewBox="0 0 32 32" version="1.1">
-                    <title>shopping-basket</title>
-                    <path d="M30 13.25h-5.572l-5.723-10.606c-0.129-0.236-0.376-0.394-0.66-0.394-0.414 0-0.75 0.336-0.75 0.75 0 0.131 0.033 0.253 0.092 0.36l-0.002-0.004 5.338 9.894h-13.415l5.395-9.891c0.055-0.101 0.087-0.222 0.087-0.35 0-0.414-0.336-0.75-0.75-0.75-0.279 0-0.522 0.152-0.651 0.377l-0.002 0.004-5.787 10.609h-5.6c-0.414 0-0.75 0.336-0.75 0.75s0.336 0.75 0.75 0.75v0h1.389l1.913 14.35c0.050 0.369 0.364 0.65 0.742 0.65 0 0 0 0 0.001 0h20c0.379-0 0.693-0.281 0.744-0.646l0-0.004 1.913-14.35h1.298c0.414 0 0.75-0.336 0.75-0.75s-0.336-0.75-0.75-0.75v0zM25.389 28.25h-18.688l-1.8-13.5h22.287zM16.044 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.035 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.035-7c0-0.001 0-0.002 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0zM11.065 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.034 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.034-7c0-0.001 0-0.002 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0zM21.016 17.25h-0.004c0 0 0 0 0 0-0.413 0-0.748 0.334-0.75 0.746v0l-0.033 7c0 0.001 0 0.002 0 0.004 0 0.413 0.334 0.748 0.746 0.75h0.004c0.413-0 0.747-0.334 0.75-0.746v-0l0.033-7c0-0.001 0-0.003 0-0.004 0-0.413-0.334-0.748-0.746-0.75h-0z" />
-                    </svg>
-                    <div className="rounded-circle bg-danger d-flex justify-content-center align-items-center" style={{ color: "white", width: "1.5rem", height: "1.5rem", position: "absolute", bottom: "0", right: "0", transform: "translate(+25%, +25%)" } }>3</div>
-                    </button>
-                
-                    <button className="rounded shoppingButton" varient="outline-primary" style={{ width: "5rem", height: "3rem", position: "relative" }} onClick={() => handleCheckout()}>Checkout</button>
-                    </div>
-                    <div className="rightBoxes">
-                    <SetLimits limits={limits} carbLimit={carbLimit} handleSetLimits={handleSetLimits} handleSetCarbLimit={handleSetCarbLimit} clearLimits={clearLimits} />
-                    <GetLimits limits={limits} />
-                    </div>
-                    <div className="rightBoxes">
-                    <Totals limits={limits} totals={totals} carbLimit={carbLimit} carbCalc={carbCalc} handleSetLimits={handleSetLimits} handleSetCarbLimit={handleSetCarbLimit} clearLimits={clearLimits} />
-                    </div>
+                    
+                    {/*<div className="rightBoxes">
+                    
+                    </div>*/}
+                    {/*<div className="rightBoxes">
+                    </div>*/}
                     {/*<div className="shadowDiv">
                     </div>*/}
 

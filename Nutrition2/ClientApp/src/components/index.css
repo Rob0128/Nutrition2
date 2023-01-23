@@ -46,37 +46,12 @@ code {
 
 }
 
-.shoppingButton {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 2rem;
-    background-color: white;
-}
-
-.setButton {
-    text-align: center
-}
-
-.shoppingButtonBox {
-    text-align: center;
-}
-
 .rightDiv {
     text-align: center;
 }
 
 .rightBoxes {
     background-color: white;
-}
-
-.shadowDiv {
-    margin-top:30px;
-    height: 1rem;
-    width: 16rem;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    opacity: 50%;
 }
 
 .breakBar {
@@ -86,12 +61,35 @@ code {
 .searchBox {
     font-family: nunito-bold;
     color: #3b3b3a;
-    text-align: center;
     padding-bottom: 30px;
 }
 
 .searchBar{
     padding-bottom:100px;
+}
+
+.searchBarDiv {
+    width: 74%;
+    float:left;
+}
+
+.shoppingButton {
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+    background-color: white;
+    font-size: 16px;
+    width: 5.9rem;
+    height: 1.9rem;
+    position: relative;
+}
+
+.setButton {
+    text-align: center
+}
+
+.shoppingButtonBox {
+    text-align: center;
+    float:left;
 }
 
 .shoppingListBox {

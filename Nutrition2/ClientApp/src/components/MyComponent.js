@@ -5,7 +5,8 @@ import { Container, Row, Col, Button, InputGroup, Form } from 'react-bootstrap';
 
 export default function App({ handleSetCarbLimit }) {
 
-    const limitNameRef = useRef()
+    const carbRef = useRef();
+    const fatRef = useRef();
 
   return (
     <Table
@@ -29,9 +30,9 @@ export default function App({ handleSetCarbLimit }) {
                           placeholder="Limit"
                           aria-label="Carbs"
                           aria-describedby=""
-                          ref={limitNameRef} type="number"
+                          ref={carbRef} type="number"
                       />
-                      <Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
+                      <Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", carbRef.current.value)}>
                           Set
                       </Button>
                   </InputGroup></Table.Cell>

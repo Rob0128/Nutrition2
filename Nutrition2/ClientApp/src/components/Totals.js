@@ -5,7 +5,8 @@ import { Container, Row, Col, Button, Table, InputGroup, Form } from 'react-boot
 
 export default function SetLimits({ totals, limits, handleSetLimits, clearLimits, carbLimit, handleSetCarbLimit, carbCalc }) {
 
-    const limitNameRef = useRef()
+    const carbRef = useRef()
+    const fatRef = useRef()
 
 
     return (
