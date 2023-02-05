@@ -4,7 +4,7 @@ import GetLimits from './GetLimits';
 import ShowProducts from './ShowProducts';
 import SearchProducts from './SearchProducts';
 import ShowShoppingList from './ShowShoppingList';
-import Totals from './Totals';
+
 import axios from 'axios';
 
 import { Route, Routes } from 'react-router-dom';
@@ -20,12 +20,21 @@ import { v4 as uuidv4 } from 'uuid';
 const LOCAL_STORAGE_KEY = 'nutritionfe.limits'
 const LOCAL_CARB_LIMIT_KEY = 'nutritionfe.carblimit'
 const LOCAL_CARB_CALC_KEY = 'nutritionfe.carblimit'
+const LOCAL_CARB_TOTALS = 'nutritionfe.carbTotals'
+
+const LOCAL_SUGAR_LIMIT_KEY = 'nutritionfe.sugarlimit'
+const LOCAL_SUGAR_CALC_KEY = 'nutritionfe.sugarlimit'
+const LOCAL_SUGAR_TOTALS = 'nutritionfe.sugarTotals'
+
 const LOCAL_FAT_TOT_LIMIT_KEY = 'nutritionfe.fattotlimit'
 const LOCAL_FAT_CALC_KEY = 'nutritionfe.fattotlimit'
+const LOCAL_FAT_TOTALS = 'nutritionfe.fatTotals'
+
+const LOCAL_FAT_SAT_LIMIT_KEY = 'nutritionfe.fattotlimit'
+const LOCAL_FAT_SAT_CALC_KEY = 'nutritionfe.fattotlimit'
 const LOCAL_PRODS_KEY = 'nutritionfe.prods'
 const LOCAL_LIMIT = 'nutritionfe.limit'
 const LOCAL_INDEX = 'nutritionfe.index'
-const LOCAL_TOTALS = 'nutritionfe.totals'
 
 //regular consts
 const CARB_INDEX = 0;
@@ -41,17 +50,27 @@ export function Home({ Component, pageProps }) {
     const [carbLimit, setCarbLimits] = useState(storedCarbLimit);
     const storedCarbCalc = JSON.parse(localStorage.getItem(LOCAL_CARB_CALC_KEY)) || [];
     const [carbCalc, setCarbCalc] = useState(storedCarbCalc);
+    const storedCarbTotals = JSON.parse(localStorage.getItem(LOCAL_CARB_TOTALS)) || [];
+    var [carbTotals, setCarbTotals] = useState(storedCarbTotals);
+
+    const storedSugarLimit = JSON.parse(localStorage.getItem(LOCAL_SUGAR_LIMIT_KEY)) || [];
+    const [sugarLimit, setSugarLimits] = useState(storedSugarLimit);
+    const storedSugarCalc = JSON.parse(localStorage.getItem(LOCAL_SUGAR_CALC_KEY)) || [];
+    const [sugarCalc, setSugarCalc] = useState(storedSugarCalc);
+    const storedSugarTotals = JSON.parse(localStorage.getItem(LOCAL_SUGAR_TOTALS)) || [];
+    var [sugarTotals, setSugarTotals] = useState(storedSugarTotals);
 
     const storedFatTotLimit = JSON.parse(localStorage.getItem(LOCAL_FAT_TOT_LIMIT_KEY)) || [];
     const [fatLimit, setFatLimits] = useState(storedFatTotLimit);
-    const storedFatCalc = JSON.parse(localStorage.getItem(LOCAL_CARB_CALC_KEY)) || [];
+    const storedFatCalc = JSON.parse(localStorage.getItem(LOCAL_FAT_CALC_KEY)) || [];
     const [fatCalc, setFatCalc] = useState(storedFatCalc);
+    const storedFatTotals = JSON.parse(localStorage.getItem(LOCAL_FAT_TOTALS)) || [];
+    var [fatTotals, setFatTotals] = useState(storedFatTotals);
 
     const storedLimits = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
     const [limits, setLimits] = useState(storedLimits);
 
-    const storedTotals = JSON.parse(localStorage.getItem(LOCAL_TOTALS)) || [];
-    var [totals, setTotals] = useState(storedTotals);
+    
 
     const storedProds = JSON.parse(localStorage.getItem(LOCAL_PRODS_KEY)) || [];
 
@@ -76,7 +95,9 @@ export function Home({ Component, pageProps }) {
 
         setIndex(1);
 
-        setTotals(0);
+        setCarbTotals(0);
+        setSugarTotals(0);
+        setFatTotals(0);
 
         axios.get('https://localhost:7149/home').then(res => {
             console.log(res.data)   
@@ -91,25 +112,28 @@ export function Home({ Component, pageProps }) {
 
     useEffect(() => {
         if (carbLimit.value > 0) {
-            var newAmount = carbLimit.value - totals;
+            var newAmount = carbLimit.value - carbTotals;
             setCarbCalc(newAmount);
         }
         else {
             setCarbCalc(0);
         }
-        
-    }, [totals, shoppingList, carbLimit])
-
-    useEffect(() => {
+        if (sugarLimit.value > 0) {
+            var newAmount = sugarLimit.value - sugarTotals;
+            setSugarCalc(newAmount);
+        }
+        else {
+            setSugarCalc(0);
+        }
         if (fatLimit.value > 0) {
-            var newAmount = fatLimit.value - totals;
-            setCarbCalc(newAmount);
+            var newAmount = fatLimit.value - fatTotals;
+            setFatCalc(newAmount);
         }
         else {
             setFatCalc(0);
         }
-
-    }, [totals, shoppingList, fatLimit])
+        
+    }, [shoppingList, carbTotals, carbLimit, sugarTotals, sugarLimit, fatTotals, fatLimit])
 
    
 
@@ -146,22 +170,13 @@ export function Home({ Component, pageProps }) {
     const handleSetLimits = (element, val) => {
         const value = val
         if (value === '') return
-
         switch (element) {
             case "carb":
                 setCarbLimits(prevLimits => { return { value: value } })
                 break;
-            case "fat":
-                setFatLimits(prevLimits => { return { value: value } })
+            case "sugar":
+                setSugarLimits(prevLimits => { return { value: value } })
                 break;
-        }
-    }
-
-    const handleSetFatLimit = (element, val) => {
-        const value = val
-        if (value === '') return
-
-        switch (element) {
             case "fat":
                 setFatLimits(prevLimits => { return { value: value } })
                 break;
@@ -183,10 +198,15 @@ export function Home({ Component, pageProps }) {
         itemToAdd.newIndex = index;
         var newIndex = parseInt(index) + 1;
 
-/*        calculateRemainingCarbs(e);
-*/
-        setTotals(totals = totals + parseInt(e.carb));
-        console.log(totals);
+        if (e.carb > 0) {
+            setCarbTotals(carbTotals = carbTotals + parseInt(e.carb));
+        }
+        if (e.sugar > 0) {
+            setSugarTotals(sugarTotals = sugarTotals + parseInt(e.sugar));
+        }
+        if (e.fat_total > 0) {
+            setFatTotals(fatTotals = fatTotals + parseInt(e.fat_total));
+        }
         setIndex(newIndex);
 
         if (shoppingList.length > 0) {
@@ -198,16 +218,12 @@ export function Home({ Component, pageProps }) {
         return itemToAdd.newIndex
     }
 
-    /*function calculateRemainingCarbs(e) {
-        if (totals > 0) {
-            setCarbCalc()
-        }
-        setLimits(newLimits)
-    }*/
 
     const handleRemove = (e) => {
         console.log(e);
-        setTotals(totals = totals - parseInt(e.carb));
+        setCarbTotals(carbTotals = carbTotals - parseInt(e.carb));
+        setSugarTotals(sugarTotals = sugarTotals - parseInt(e.sugar));
+        setFatTotals(fatTotals = fatTotals - parseInt(e.fat));
 
         console.log(shoppingList.filter(item => item.newIndex === e.newIndex));
         console.log(shoppingList.filter(item => item.newIndex !== e.newIndex));
@@ -219,36 +235,11 @@ export function Home({ Component, pageProps }) {
         var returnIndex = addingIndex;
         addingIndex++;
         return returnIndex;
-     
     }
 
     const handleCheckout = () => {
         shoppingList.forEach(openTabs);
     }
-
-    /*const handleSave = () => {
-
-        const formData = new FormData();
-
-        formData.append('keyword', 'test@gmail.com');
-        const url = "https://localhost:7149/home?keyword=";
-        
-        const postUrl = url.concat(e);
-
-        fetch(postUrl, {
-            method: 'post',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setProds(result);
-                }).catch(err => {
-                    console.log(err);
-                })
-        
-
-    };*/
 
     function openTabs(prod) {
         window.open(prod.item_link, '_blank').focus();
@@ -256,22 +247,18 @@ export function Home({ Component, pageProps }) {
 
     return (
         
-            
         <Container fluid>
                
                 <Row className='breakBar'>
                 </Row>
 
             <Row className=''>
-                <Col sm={8}>
-                    <SetLimits limits={limits} carbLimit={carbLimit} fatLimit={fatLimit} handleSetLimits={handleSetLimits} handleSetFatLimit={handleSetFatLimit}  clearLimits={clearLimits} />
+                <Col sm={1}>
+                </Col>
+                <Col sm={9}>
+                    <SetLimits limits={limits} carbLimit={carbLimit} carbCalc={carbCalc} carbTotals={carbTotals} sugarLimit={sugarLimit} sugarCalc={sugarCalc} sugarTotals={sugarTotals} fatLimit={fatLimit} fatCalc={fatCalc} fatTotals={fatTotals} handleSetLimits={handleSetLimits} clearLimits={clearLimits} />
                 <GetLimits limits={limits} />
                 </Col>
-                <Col sm={3}>
-                    <Totals limits={limits} totals={totals} carbLimit={carbLimit} carbCalc={carbCalc} handleSetLimits={handleSetLimits} clearLimits={clearLimits} />
-
-                        
-                    </Col>
                 </Row>
 
             <Row>
