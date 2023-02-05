@@ -3,22 +3,24 @@ import Limit from "./Limit";
 import { Container, Row, Col, Button, Table, InputGroup, Form } from 'react-bootstrap';
 
 
-export default function SetLimits({ limits, handleSetLimits, handleSetFatLimit, handleSetCarbLimit, clearLimits, carbLimit, fatLimit}) {
+export default function SetLimits({ limits, handleSetLimits, handleSetFatLimit, handleSetCarbLimit, clearLimits, carbLimit, carbCalc, carbTotals, sugarLimit, sugarCalc, sugarTotals, fatCalc, fatLimit, fatTotals }) {
 
     const carbRef = useRef()
+    const sugarRef = useRef()
     const fatRef = useRef()
 
     useEffect(() => {
         carbRef.current.value = null
-    }, [handleSetCarbLimit])
-
-    useEffect(() => {
+        sugarRef.current.value = null
         fatRef.current.value = null
-    }, [handleSetFatLimit])
+    }, [handleSetLimits])
 
-    function callUpdates(carbVal, fatVal) {
+    function callUpdates(carbVal, sugarVal, fatVal) {
         if (carbVal != null) {
             handleSetLimits("carb", carbVal)
+        }
+        if (sugarVal != null) {
+            handleSetLimits("sugar", sugarVal)
         }
         if (fatVal != null) {
             handleSetLimits("fat", fatVal)
@@ -31,10 +33,10 @@ export default function SetLimits({ limits, handleSetLimits, handleSetFatLimit, 
         <thead>
           <tr>
             <th>Carbs</th>
+            <th>sugar</th>
             <th>Fat</th>
             <th>Saturated Fat</th>
             <th>Protein</th>
-            <th>Salt</th>
           </tr>
         </thead>
         <tbody>
@@ -46,11 +48,19 @@ export default function SetLimits({ limits, handleSetLimits, handleSetFatLimit, 
                   aria-describedby=""
                   ref={carbRef} type="number"
                 />
-                {/*<Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
-                  Set
-                </Button>*/}
+              
               </InputGroup>
-              </td>
+            </td>
+            <td><InputGroup className="mb-3 inputWidth" size="sm">
+                <Form.Control
+                    placeholder="Limit"
+                    aria-label="Sugar"
+                    aria-describedby=""
+                    ref={sugarRef} type="number"
+                />
+
+            </InputGroup>
+            </td>
               <td>
               <InputGroup className="mb-3 inputWidth" size="sm">
                 <Form.Control
@@ -59,62 +69,41 @@ export default function SetLimits({ limits, handleSetLimits, handleSetFatLimit, 
                   aria-describedby=""
                   ref={fatRef} type="number"
                 />
-                {/*<Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
-                  Set
-                </Button>*/}
+                
               </InputGroup>
             </td>
                         <td>
-                            <InputGroup className="mb-3 inputWidth" size="sm">
-                                <Form.Control
-                                    placeholder="Limit"
-                                    aria-label="Fat"
-                                    aria-describedby=""
-                                    ref={fatRef} type="number"
-                                />
-                                {/*<Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
-                  Set
-                </Button>*/}
-                            </InputGroup>
+                            
                         </td>
                         <td>
-                            <InputGroup className="mb-3 inputWidth" size="sm">
-                                <Form.Control
-                                    placeholder="Limit"
-                                    aria-label="Fat"
-                                    aria-describedby=""
-                                    ref={fatRef} type="number"
-                                />
-                                {/*<Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
-                  Set
-                </Button>*/}
-                            </InputGroup>
+                            
                         </td>
-                        <td>
-                            <InputGroup className="mb-3 inputWidth" size="sm">
-                                <Form.Control
-                                    placeholder="Limit"
-                                    aria-label="Fat"
-                                    aria-describedby=""
-                                    ref={fatRef} type="number"
-                                />
-                                {/*<Button variant="outline-secondary" onClick={() => handleSetCarbLimit("carb", limitNameRef.current.value)}>
-                  Set
-                </Button>*/}
-                            </InputGroup>
-                        </td>
+                       
           </tr>
           <tr>
             <td>{carbLimit.value}</td>
+            <td>{sugarLimit.value}</td>
             <td>{fatLimit.value}</td>
-            <td>Thornton</td>
-          </tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td>{carbCalc}</td>
+            <td>{sugarCalc}</td>
+            <td>{fatCalc}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>{carbTotals}</td>
+            <td>{sugarTotals}</td>
+            <td>{fatTotals}</td>
+            <td></td>
+        </tr>
           
         </tbody>
             </Table>
             {/* Will need to set all values not just carbs */}   
             <div className="setButton">
-                <Button variant="outline-secondary" onClick={() => callUpdates(carbRef.current.value, fatRef.current.value)}>
+                <Button variant="outline-secondary" onClick={() => callUpdates(carbRef.current.value, sugarRef.current.value, fatRef.current.value)}>
                 Set
                 </Button>
                 </div>
