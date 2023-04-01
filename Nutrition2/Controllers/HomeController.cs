@@ -22,7 +22,7 @@ namespace Nutrition2.Controllers
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        };
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -80,45 +80,45 @@ namespace Nutrition2.Controllers
         }
 
         [HttpPost]
-        public List<ProductModel> Search(string keyWord = "", int carb = 0, int fat_tot = 0)
+        public List<ProductModel> Search(string keyWord = "", double carb = -1, double fat_tot = -1, double fat_saturated = -1, double sugar = -1, double protein = -1)
         {
-            if (keyWord == null)
+            if (keyWord == "empty")
             {
                 keyWord = "";
             }
-            var model = new List<ProductModel>();
-            if (keyWord == "")
+            var searchProds = prodList.AsEnumerable();
+
+            if (carb > -1)
             {
-                if (carb > 0 || fat_tot > 0)
-                {
-                    /*if (carb == 0)
-                    {
-                        carb 
-                    }*/
-                    var searchProds = prodList.FindAll(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.carb))) <= carb && Convert.ToInt64(Math.Floor(Convert.ToDouble(x.fat_total))) <= fat_tot);
-                    return searchProds;
-                }
-                else
-                {
-                    var searchProds = prodList.FindAll(x => true).GetRange(0,100);
-                    return searchProds;
-                }
-            }
-            else
-            {
-                if (carb > 0 || fat_tot > 0)
-                {
-                    var searchProds = prodList.FindAll(x => x.title.ToLower().Contains(keyWord.ToLower()) && Convert.ToInt64(Math.Floor(Convert.ToDouble(x.carb))) <= carb && Convert.ToInt64(Math.Floor(Convert.ToDouble(x.fat_total))) <= fat_tot);
-                    return searchProds;
-                }
-                else
-                {
-                    var searchProds = prodList.FindAll(x => x.title.ToLower().Contains(keyWord.ToLower()));
-                    return searchProds;
-                }
+                searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.carb))) <= carb);
             }
 
+            if (fat_tot > -1)
+            {
+                searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.fat_total))) <= fat_tot);
+            }
+
+            if (fat_saturated > -1)
+            {
+                searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.fat_saturated))) <= fat_saturated);
+            }
+
+            if (sugar > -1)
+            {
+                searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.sugar))) <= sugar);
+            }
+
+            if (protein > -1)
+            {
+                searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.sugar))) <= sugar);
+            }
+
+            searchProds = searchProds.Where(x => x.title.ToLower().Contains(keyWord.ToLower()));
+           
+
+            return searchProds.Take(100).ToList();
         }
+
 
         public void SaveList(List<ProductModel> prodsToSave)
         {

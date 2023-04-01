@@ -58,6 +58,10 @@ code {
     height: 50px;
 }
 
+.highlightedRow {
+    background-color: #ffeabd;
+}
+
 .searchBox {
     font-family: nunito-bold;
     color: #3b3b3a;
@@ -71,6 +75,10 @@ code {
 .searchBarDiv {
     width: 74%;
     float:left;
+}
+
+.setLimitsSideHeaders {
+    border-right: solid;
 }
 
 .shoppingButton {
@@ -116,4 +124,15 @@ code {
     top: 0;
     transition: right .5s,z-index 0s .5s;
     z-index: 1050;
+}
+
+.productinfo {
+    font-size: 70%;
+    margin: 0;
+}
+
+.productinfoHeader {
+    font-size: 90%;
+    margin: 1px;
+    font-weight: bold;
 }
