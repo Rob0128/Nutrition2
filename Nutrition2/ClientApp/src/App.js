@@ -15,7 +15,7 @@ export default class App extends Component {
 
     constructor() {
         super();
-        axios.get('https://localhost:7149/home').then(res => {
+        axios.get('/home').then(res => {
             this.setState({ prods: res.data })
         })
     }

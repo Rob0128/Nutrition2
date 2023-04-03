@@ -175,7 +175,7 @@ export function Home({ Component, pageProps }) {
         
         const formData = new FormData();
         formData.append('keyword', 'test@gmail.com');
-        const url = "https://localhost:7149/home?keyword=";
+        const url = "/home?keyword=";
         if (e == "") {
             var postUrl = url.concat("empty");
         }
@@ -278,15 +278,13 @@ export function Home({ Component, pageProps }) {
 
 
     const handleRemove = (e) => {
+        debugger
         setCarbTotals(carbTotals = carbTotals - parseInt(e.carb));
         setSugarTotals(sugarTotals = sugarTotals - parseInt(e.sugar));
         setFatTotals(fatTotals = fatTotals - parseInt(e.fat_total));
-        setFatSatTotals(fatSatTotals = fatSatTotals - parseInt(e.fatSat_total));
+        setFatSatTotals(fatSatTotals = fatSatTotals - parseInt(e.fat_saturated));
         setProteinTotals(proteinTotals = proteinTotals - parseInt(e.protein));
-
-        console.log(shoppingList.filter(item => item.newIndex === e.newIndex));
-        console.log(shoppingList.filter(item => item.newIndex !== e.newIndex));
-        
+                
         setShoppingList(shoppingList.filter(item => item.newIndex !== e.newIndex));
     }
 
