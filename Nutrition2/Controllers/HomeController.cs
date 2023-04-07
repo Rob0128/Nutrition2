@@ -28,14 +28,7 @@ namespace Nutrition2.Controllers
         {
             _logger = logger;
 
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false);
-            IConfiguration configuration = builder.Build();
-            string dbString = configuration.GetValue<string>("ConnectionStrings:MongoConnection");
-
-            var settings = MongoClientSettings.FromConnectionString(dbString);
-            settings.ServerApi = new ServerApi(ServerApiVersion.V1);
-            var client = new MongoClient(settings);
-            var database = client.GetDatabase("NutritionApp");
+            var database = getmongoDB();
             var prods = database.GetCollection<ProductModel>("products2");
             /*            ProductModel fne = prods.Find<ProductModel>(x => x.title == "Waitrose Summer Southern Spiced Citrus Chicken Thigh650g").First();*/
             prodList = prods.Find(x => true).ToList();
@@ -80,7 +73,7 @@ namespace Nutrition2.Controllers
         }
 
         [HttpPost]
-        public List<ProductModel> Search(string keyWord = "", double carb = -1, double fat_tot = -1, double fat_saturated = -1, double sugar = -1, double protein = -1)
+        public List<ProductModel> Search(string keyWord = "", double carb = -1000, double fat_tot = -1000, double fat_saturated = -1000, double sugar = -1000, double protein = -1000)
         {
             if (keyWord == "empty")
             {
@@ -88,34 +81,33 @@ namespace Nutrition2.Controllers
             }
             var searchProds = prodList.AsEnumerable();
 
-            if (carb > -1)
+            if (carb > -999)
             {
                 searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.carb))) <= carb);
             }
 
-            if (fat_tot > -1)
+            if (fat_tot > -999)
             {
                 searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.fat_total))) <= fat_tot);
             }
 
-            if (fat_saturated > -1)
+            if (fat_saturated > -999)
             {
                 searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.fat_saturated))) <= fat_saturated);
             }
 
-            if (sugar > -1)
+            if (sugar > -999)
             {
                 searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.sugar))) <= sugar);
             }
 
-            if (protein > -1)
+            if (protein > -999)
             {
                 searchProds = searchProds.Where(x => Convert.ToInt64(Math.Floor(Convert.ToDouble(x.sugar))) <= sugar);
             }
 
             searchProds = searchProds.Where(x => x.title.ToLower().Contains(keyWord.ToLower()));
            
-
             return searchProds.Take(100).ToList();
         }
 
@@ -137,12 +129,14 @@ namespace Nutrition2.Controllers
                 
                 stats.InsertOne(StatItem);
             }
-         
         }
 
         public IMongoDatabase getmongoDB()
         {
-            var settings = MongoClientSettings.FromConnectionString("mongodb+srv://rob:green28@cluster0.gmiu7.mongodb.net/?retryWrites=true&w=majority");
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false);
+            IConfiguration configuration = builder.Build();
+            string dbString = configuration.GetValue<string>("ConnectionStrings:MongoConnection");
+            var settings = MongoClientSettings.FromConnectionString(dbString);
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
             MongoClient client = new MongoClient(settings);
             var database = client.GetDatabase("NutritionApp");

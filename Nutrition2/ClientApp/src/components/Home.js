@@ -120,7 +120,7 @@ export function Home({ Component, pageProps }) {
         setFatSatTotals(0.0);
         setProteinTotals(0.0);
 
-    axios.get('https://localhost:7149/home').then(res => {
+    axios.get('/home').then(res => {
             console.log(res.data)   
             setProds(res.data)
         })
@@ -239,9 +239,14 @@ export function Home({ Component, pageProps }) {
         if (value === '') return
     }
 
-    function clearLimits(e) {
+    function clearLimits() {
+        debugger
         const newLimits = []
-        setLimits(newLimits)
+        setCarbLimits(newLimits)
+        setSugarLimits(newLimits)
+        setFatLimits(newLimits)
+        setFatSatLimits(newLimits)
+        setProteinLimits(newLimits)
     }
 
     const handleAdd = (e) => {

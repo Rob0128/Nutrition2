@@ -52,8 +52,8 @@ export default function SetLimits({ limits, handleSetLimits, handleSetFatLimit, 
           <tr>
             <th></th>
             <th>Carbs</th>
-            <th>sugar</th>
-            <th>Fat</th>
+            <th>Sugar</th>
+                <th>Fat Total</th>
             <th>Saturated Fat</th>
             <th>Protein</th>
           </tr>
@@ -147,9 +147,12 @@ export default function SetLimits({ limits, handleSetLimits, handleSetFatLimit, 
         </tbody>
             </Table>
             {/* Will need to set all values not just carbs */}   
-            <div className="setButtonDiv">
-                <Button variant="outline-secondary" className="setButton" onClick={() => callUpdates(carbRef.current.value, sugarRef.current.value, fatRef.current.value, fatSatRef.current.value, proteinRef.current.value)}>
+            <div className="setButton">
+                <Button variant="outline-secondary" className="setButtonDiv" onClick={() => callUpdates(carbRef.current.value, sugarRef.current.value, fatRef.current.value, fatSatRef.current.value, proteinRef.current.value)}>
                 Set
+                </Button>
+                <Button variant="outline-secondary" className="clearButton" onClick={() => clearLimits()}>
+                    Clear
                 </Button>
                 </div>
       </div>

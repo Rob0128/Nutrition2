@@ -11,7 +11,7 @@
     "Nutrition2": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7149;http://localhost:5149",
+      "applicationUrl": "https://localhost:7149;",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
