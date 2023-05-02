@@ -5,7 +5,7 @@ export default function Product({ prod, handleAdd }) {
     return (
 
             <tr>
-            <td><p>{prod.title}</p><p>Carbs: {prod.carb}</p></td><td><Button variant="info" id={prod.id} onClick={() => handleAdd(prod)}>Add</Button></td>
+            <td><p className="productinfoHeader">{prod.title}</p><p className="productinfo">Carbs: {prod.carb} | Fat Total: {prod.fat_total} | Fat Saturated: {prod.fat_saturated} | Sugar: {prod.sugar} | Protein: {prod.protein} </p></td><td><Button variant="info" id={prod.id} onClick={() => handleAdd(prod)}>Add</Button></td>
             </tr>
     )
 }

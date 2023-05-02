@@ -20,7 +20,7 @@ export default function SetLimits({ search }) {
                     ref={searchTerm} type="text"
                 />
                 <Button variant="outline-secondary" onClick={() => search(searchTerm.current.value)}>
-                    Set
+                    Search
                 </Button>
             </InputGroup>
         </div>
