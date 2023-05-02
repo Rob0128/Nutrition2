@@ -148,3 +148,38 @@ code {
     margin: 1px;
     font-weight: bold;
 }
+
+.mobile-hidden {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .boxStyle {
+        font-size: 0.8em;
+    }
+
+    .mobile-hidden {
+        display: table-cell;
+    }
+
+    .inputWidth {
+        width: 70%;
+    }
+
+    .searchBarDiv {
+        width: 95%;
+        float: left;
+    }
+
+    .searchBox {
+        text-align:center
+    }
+
+    .shoppingButtonBox {
+        float: inherit;
+    }
+
+    .breakBar {
+        height: 10px;
+    }
+}

@@ -47,113 +47,125 @@ export default function SetLimits({ limits, handleSetLimits, handleSetFatLimit, 
 
     return (
         <div>
-        <Table className="boxStyle" striped="columns" hover>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Carbs</th>
-            <th>Sugar</th>
-                <th>Fat Total</th>
-            <th>Saturated Fat</th>
-            <th>Protein</th>
-          </tr>
-        </thead>
-                <tbody>
-                    
-            <tr className="highlightedRow">
-            <td class="setLimitsSideHeaders">Set Limits</td>
-            <td><InputGroup className="mb-3 inputWidth" size="sm">
-                <Form.Control
-                  placeholder="Limit"
-                  aria-label="Carbs"
-                  aria-describedby=""
-                  ref={carbRef} type="number"
-                />
-              
-              </InputGroup>
-            </td>
-            <td><InputGroup className="mb-3 inputWidth" size="sm">
-                <Form.Control
-                    placeholder="Limit"
-                    aria-label="Sugar"
-                    aria-describedby=""
-                    ref={sugarRef} type="number"
-                />
-
-            </InputGroup>
-            </td>
-              <td>
-              <InputGroup className="mb-3 inputWidth" size="sm">
-                <Form.Control
-                  placeholder="Limit"
-                  aria-label="Fat"
-                  aria-describedby=""
-                  ref={fatRef} type="number"
-                />
-                
-              </InputGroup>
-                </td>
-                <td>
-                    <InputGroup className="mb-3 inputWidth" size="sm">
-                        <Form.Control
-                            placeholder="Limit"
-                            aria-label="FatSat"
-                            aria-describedby=""
-                            ref={fatSatRef} type="number"
-                        />
-
-                    </InputGroup>
-                </td>
-                <td><InputGroup className="mb-3 inputWidth" size="sm">
-                    <Form.Control
-                        placeholder="Limit"
-                        aria-label="Protein"
-                        aria-describedby=""
-                        ref={proteinRef} type="number"
-                    />
-
-                </InputGroup>
-                </td>
-                       
-          </tr>
+            <Table className="boxStyle" striped hover>
+                <thead>
                     <tr>
-            <td class="setLimitsSideHeaders">Limits</td>
-            <td>{carbLimit.value}</td>
-            <td>{sugarLimit.value}</td>
-            <td>{fatLimit.value}</td>
-            <td>{fatSatLimit.value}</td>
-            <td>{proteinLimit.value}</td>
-
-        </tr>
-        <tr>
-            <td class="setLimitsSideHeaders">Remaining</td>
-            <td>{carbCalc}</td>
-            <td>{sugarCalc}</td>
-            <td>{fatCalc}</td>
-            <td>{fatSatCalc}</td>
-            <td>{proteinCalc}</td>
-
-        </tr>
-        <tr>
-            <td class="setLimitsSideHeaders">Totals</td>
-            <td>{carbTotals}</td>
-            <td>{sugarTotals}</td>
-            <td>{fatTotals}</td>
-            <td>{fatSatTotals}</td>
-            <td>{proteinTotals}</td>
-
-        </tr>
-          
-        </tbody>
+                        <th className=""></th>
+                        <th>Set Limits</th>
+                        <th>Limits</th>
+                        <th>Remaining</th>
+                        <th>Totals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr className="">
+                        <td className="mb-2">Carbs</td>
+                        <td>
+                            <InputGroup className="mb-3 inputWidth" size="sm">
+                                <Form.Control
+                                    placeholder="Limit"
+                                    aria-label="Carbs"
+                                    aria-describedby=""
+                                    ref={carbRef}
+                                    type="number"
+                                />
+                            </InputGroup>
+                        </td>
+                        <td>{carbLimit.value}</td>
+                        <td>{carbCalc}</td>
+                        <td>{carbTotals}</td>
+                    </tr>
+                    <tr>
+                        <td className="">Sugar</td>
+                        <td>
+                            <InputGroup className="mb-3 inputWidth" size="sm">
+                                <Form.Control
+                                    placeholder="Limit"
+                                    aria-label="Sugar"
+                                    aria-describedby=""
+                                    ref={sugarRef}
+                                    type="number"
+                                />
+                            </InputGroup>
+                        </td>
+                        <td>{sugarLimit.value}</td>
+                        <td>{sugarCalc}</td>
+                        <td>{sugarTotals}</td>
+                    </tr>
+                    <tr>
+                        <td className="">Fat Total</td>
+                        <td>
+                            <InputGroup className="mb-3 inputWidth" size="sm">
+                                <Form.Control
+                                    placeholder="Limit"
+                                    aria-label="Fat"
+                                    aria-describedby=""
+                                    ref={fatRef}
+                                    type="number"
+                                />
+                            </InputGroup>
+                        </td>
+                        <td>{fatLimit.value}</td>
+                        <td>{fatCalc}</td>
+                        <td>{fatTotals}</td>
+                    </tr>
+                    <tr>
+                        <td className="">Saturated Fat</td>
+                        <td>
+                            <InputGroup className="mb-3 inputWidth" size="sm">
+                                <Form.Control
+                                    placeholder="Limit"
+                                    aria-label="FatSat"
+                                    aria-describedby=""
+                                    ref={fatSatRef}
+                                    type="number"
+                                />
+                            </InputGroup>
+                        </td>
+                        <td>{fatSatLimit.value}</td>
+                        <td>{fatSatCalc}</td>
+                        <td>{fatSatTotals}</td>
+                    </tr>
+                    <tr>
+                        <td className="">Protein</td>
+                        <td>
+                            <InputGroup className="mb-3 inputWidth" size="sm">
+                                <Form.Control
+                                    placeholder="Limit"
+                                    aria-label="Protein"
+                                    aria-describedby=""
+                                    ref={proteinRef}
+                                    type="number"
+                                />
+                            </InputGroup>
+                        </td>
+                        <td>{proteinLimit.value}</td>
+                        <td>{proteinCalc}</td>
+                        <td>{proteinTotals}</td>
+                    </tr>
+                </tbody>
             </Table>
-            {/* Will need to set all values not just carbs */}   
             <div className="setButton">
-                <Button variant="outline-secondary" className="setButtonDiv" onClick={() => callUpdates(carbRef.current.value, sugarRef.current.value, fatRef.current.value, fatSatRef.current.value, proteinRef.current.value)}>
-                Set
+                <Button
+                    variant="outline-secondary"
+                    className="setButtonDiv"
+                    onClick={() =>
+                        callUpdates(
+                            carbRef.current.value,
+                            sugarRef.current.value,
+                            fatRef.current.value,
+                            fatSatRef.current.value,
+                            proteinRef.current.value
+                        )
+                    }
+                >
+                    Set
                 </Button>
-                <Button variant="outline-secondary" className="clearButton" onClick={() => clearLimits()}>
-                    Clear
-                </Button>
+                <Button
+                    variant="outline-secondary"
+                    className="clearButton"
+                    onClick={() => clearLimits()}
+                >Clear</Button>
                 </div>
       </div>
     );

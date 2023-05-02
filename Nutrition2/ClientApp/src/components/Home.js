@@ -175,7 +175,7 @@ export function Home({ Component, pageProps }) {
         
         const formData = new FormData();
         formData.append('keyword', 'test@gmail.com');
-        const url = "/home?keyword=";
+        const url = "https://localhost:7149/home?keyword=";
         if (e == "") {
             var postUrl = url.concat("empty");
         }
@@ -240,13 +240,15 @@ export function Home({ Component, pageProps }) {
     }
 
     function clearLimits() {
-        debugger
         const newLimits = []
         setCarbLimits(newLimits)
         setSugarLimits(newLimits)
         setFatLimits(newLimits)
         setFatSatLimits(newLimits)
         setProteinLimits(newLimits)
+    }
+    function totalsFigure(totals, unit) {
+        return ((parseFloat(totals) + parseFloat(unit)).toFixed(1))
     }
 
     const handleAdd = (e) => {
@@ -256,19 +258,19 @@ export function Home({ Component, pageProps }) {
         var newIndex = parseInt(index) + 1;
 
         if (e.carb > 0.0) {
-            setCarbTotals(carbTotals = carbTotals + parseInt(e.carb));
+            setCarbTotals(totalsFigure(carbTotals, e.carb));
         }
         if (e.sugar > 0.0) {
-            setSugarTotals(sugarTotals = sugarTotals + parseInt(e.sugar));
+            setSugarTotals(totalsFigure(sugarTotals, e.sugar));
         }
         if (e.fat_total > 0.0) {
-            setFatTotals(fatTotals = fatTotals + parseInt(e.fat_total));
+            setFatTotals(totalsFigure(fatTotals, e.fat_total));
         }
         if (e.fat_saturated > 0.0) {
-            setFatSatTotals(fatSatTotals = fatSatTotals + parseInt(e.fat_saturated));
+            setFatSatTotals(totalsFigure(fatSatTotals, e.fat_saturated));
         }
         if (e.protein > 0.0) {
-            setProteinTotals(proteinTotals = proteinTotals + parseInt(e.protein));
+            setProteinTotals(totalsFigure(proteinTotals, e.protein));
         }
         setIndex(newIndex);
 
@@ -283,12 +285,11 @@ export function Home({ Component, pageProps }) {
 
 
     const handleRemove = (e) => {
-        debugger
-        setCarbTotals(carbTotals = carbTotals - parseInt(e.carb));
-        setSugarTotals(sugarTotals = sugarTotals - parseInt(e.sugar));
-        setFatTotals(fatTotals = fatTotals - parseInt(e.fat_total));
-        setFatSatTotals(fatSatTotals = fatSatTotals - parseInt(e.fat_saturated));
-        setProteinTotals(proteinTotals = proteinTotals - parseInt(e.protein));
+        setCarbTotals(carbTotals = (carbTotals - parseFloat(e.carb)).toFixed(1));
+        setSugarTotals(sugarTotals = (sugarTotals - parseFloat(e.sugar)).toFixed(1));
+        setFatTotals(fatTotals = (fatTotals - parseFloat(e.fat_total)).toFixed(1));
+        setFatSatTotals(fatSatTotals = (fatSatTotals - parseFloat(e.fat_saturated)).toFixed(1));
+        setProteinTotals(proteinTotals = (proteinTotals - parseFloat(e.protein)).toFixed(1));
                 
         setShoppingList(shoppingList.filter(item => item.newIndex !== e.newIndex));
     }
