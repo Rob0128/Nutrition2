@@ -25,7 +25,7 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true);
 }));
 
 
@@ -44,10 +44,14 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseCors("corsapp");
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
 
 //app.UseAuthentication();
 //app.UseIdentityServer();

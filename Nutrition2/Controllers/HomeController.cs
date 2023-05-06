@@ -75,6 +75,7 @@ namespace Nutrition2.Controllers
         [HttpPost]
         public List<ProductModel> Search(string keyWord = "", double carb = -1000, double fat_tot = -1000, double fat_saturated = -1000, double sugar = -1000, double protein = -1000)
         {
+            System.Console.WriteLine("got here 3");
             if (keyWord == "empty")
             {
                 keyWord = "";
