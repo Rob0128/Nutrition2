@@ -175,7 +175,7 @@ export function Home({ Component, pageProps }) {
         
         const formData = new FormData();
         formData.append('keyword', 'test@gmail.com');
-        const url = "https://localhost:7149/home?keyword=";
+        const url = "/home?keyword=";
         if (e == "") {
             var postUrl = url.concat("empty");
         }
