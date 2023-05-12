@@ -132,35 +132,35 @@ export function Home({ Component, pageProps }) {
 
     useEffect(() => {
         if (carbLimit.value > 0.0) {
-            var newAmount = carbLimit.value - carbTotals;
+            var newAmount = parseFloat(carbLimit.value - carbTotals).toFixed(1);
             setCarbCalc(newAmount);
         }
         else {
             setCarbCalc(0.0);
         }
         if (sugarLimit.value > 0.0) {
-            var newAmount = sugarLimit.value - sugarTotals;
+            var newAmount = parseFloat(sugarLimit.value - sugarTotals).toFixed(1);
             setSugarCalc(newAmount);
         }
         else {
             setSugarCalc(0.0);
         }
         if (fatLimit.value > 0.0) {
-            var newAmount = fatLimit.value - fatTotals;
+            var newAmount = parseFloat(fatLimit.value - fatTotals).toFixed(1);
             setFatCalc(newAmount);
         }
         else {
             setFatCalc(0.0);
         }
         if (fatSatLimit.value > 0.0) {
-            var newAmount = fatSatLimit.value - fatSatTotals;
+            var newAmount = parseFloat(fatSatLimit.value - fatSatTotals).toFixed(1);
             setFatSatCalc(newAmount);
         }
         else {
             setFatSatCalc(0.0);
         }
         if (proteinLimit.value > 0.0) {
-            var newAmount = proteinLimit.value - proteinTotals;
+            var newAmount = parseFloat(proteinLimit.value - proteinTotals).toFixed(1);
             setProteinCalc(newAmount);
         }
         else {
@@ -175,7 +175,7 @@ export function Home({ Component, pageProps }) {
         
         const formData = new FormData();
         formData.append('keyword', 'test@gmail.com');
-        const url = "/home?keyword=";
+        const url = "https://localhost:7149/home?keyword=";
         if (e == "") {
             var postUrl = url.concat("empty");
         }
@@ -232,11 +232,6 @@ export function Home({ Component, pageProps }) {
                 setProteinLimits(prevLimits => { return { value: value } })
                 break;
         }
-    }
-
-    const handleSetProds = (e) => {
-        const value = e
-        if (value === '') return
     }
 
     function clearLimits() {
