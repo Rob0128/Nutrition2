@@ -166,7 +166,8 @@ export function Home({ Component, pageProps }) {
         else {
             setProteinCalc(0);
         }
-        
+        search();
+
     }, [shoppingList, carbTotals, carbLimit, sugarTotals, sugarLimit, fatTotals, fatLimit, fatSatTotals, fatSatLimit, proteinTotals, proteinLimit])
 
    
